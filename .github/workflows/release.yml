@@ -41,3 +41,40 @@ jobs:
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish APT Repo to GitHub Pages
+        run: |
+          # Install repo tools
+          sudo apt-get install -y dpkg-dev
+
+          # Configure git
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stash the built deb file
+          mkdir -p /tmp/debs
+          cp build/*.deb /tmp/debs/
+
+          # Checkout or create gh-pages branch
+          git fetch origin gh-pages || true
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf .
+          fi
+
+          # Copy new deb file
+          cp /tmp/debs/*.deb .
+
+          # Scan packages to create APT index
+          dpkg-scanpackages --multiversion . > Packages
+          gzip -k -f Packages
+          apt-ftparchive release . > Release
+
+          # Commit and Push
+          git add .
+          git commit -m "Update APT repository with $(basename /tmp/debs/*.deb)"
+          git push origin gh-pages --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
