@@ -1,0 +1,11 @@
+# ninja log v7
+1	678	1768586261044816350	Horizon_autogen/timestamp	e0d0455ab263662d
+1	678	1768586261044816350	Horizon_autogen/mocs_compilation.cpp	e0d0455ab263662d
+1	678	1768586261044816350	/home/runner/work/horizon/horizon/build/Horizon_autogen/timestamp	e0d0455ab263662d
+1	678	1768586261044816350	/home/runner/work/horizon/horizon/build/Horizon_autogen/mocs_compilation.cpp	e0d0455ab263662d
+679	3296	1768586261050816375	CMakeFiles/Horizon.dir/src/main.cpp.o	8299098b1acc60c3
+679	3321	1768586261050816375	CMakeFiles/Horizon.dir/Horizon_autogen/mocs_compilation.cpp.o	6f8b5f9a9ef76cc8
+680	4648	1768586261051816380	CMakeFiles/Horizon.dir/src/MainWindow.cpp.o	a90580131a463c5f
+3296	5525	1768586263667827542	CMakeFiles/Horizon.dir/src/ScreenItem.cpp.o	b364f9319f573367
+3321	5735	1768586263692827649	CMakeFiles/Horizon.dir/src/XrandrManager.cpp.o	b6a1c0a598da2689
+5735	5949	1768586266106837950	Horizon	83959b421951617b

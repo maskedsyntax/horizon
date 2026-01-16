@@ -1,0 +1,45 @@
+Package: horizon
+Version: 0.1.2
+Architecture: amd64
+Maintainer: Horizon Maintainers <horizon@example.com>
+Installed-Size: 105
+Depends: x11-xserver-utils, libc6 (>= 2.34), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.4.0), libqt6gui6t64 (>= 6.4.0), libqt6widgets6t64 (>= 6.3.0), libstdc++6 (>= 11)
+Filename: ./Horizon-0.1.2-Linux.deb
+Size: 33564
+MD5sum: 66e954ee5e846dd0d9155d81eff578e0
+SHA1: 175ad489fb6a90287b5dec1377ceaeb48f8ecacb
+SHA256: 7d8d3f50aceece12e0d072bd59149e177054f438c3a9de48981dda1b0593ed42
+Section: devel
+Priority: optional
+Description: Simple Xrandr GUI Manager
+
+Package: horizon
+Version: 0.1.2
+Architecture: amd64
+Maintainer: Horizon Maintainers <horizon@example.com>
+Installed-Size: 105
+Depends: x11-xserver-utils, libc6 (>= 2.34), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.4.0), libqt6gui6t64 (>= 6.4.0), libqt6widgets6t64 (>= 6.3.0), libstdc++6 (>= 11)
+Filename: ./build/Horizon-0.1.2-Linux.deb
+Size: 33564
+MD5sum: 66e954ee5e846dd0d9155d81eff578e0
+SHA1: 175ad489fb6a90287b5dec1377ceaeb48f8ecacb
+SHA256: 7d8d3f50aceece12e0d072bd59149e177054f438c3a9de48981dda1b0593ed42
+Section: devel
+Priority: optional
+Description: Simple Xrandr GUI Manager
+
+Package: horizon
+Version: 0.1.2
+Architecture: amd64
+Maintainer: Horizon Maintainers <horizon@example.com>
+Installed-Size: 105
+Depends: x11-xserver-utils, libc6 (>= 2.34), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.4.0), libqt6gui6t64 (>= 6.4.0), libqt6widgets6t64 (>= 6.3.0), libstdc++6 (>= 11)
+Filename: ./build/_CPack_Packages/Linux/DEB/Horizon-0.1.2-Linux.deb
+Size: 33564
+MD5sum: 66e954ee5e846dd0d9155d81eff578e0
+SHA1: 175ad489fb6a90287b5dec1377ceaeb48f8ecacb
+SHA256: 7d8d3f50aceece12e0d072bd59149e177054f438c3a9de48981dda1b0593ed42
+Section: devel
+Priority: optional
+Description: Simple Xrandr GUI Manager
+
