@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Horizon
+Comment=Modern multi-monitor management tool
+Exec=horizon
+Icon=preferences-desktop-display
+Terminal=false
+Categories=Settings;HardwareSettings;
+Keywords=monitor;display;screen;resolution;xrandr;
