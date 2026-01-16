@@ -1,2 +1,2 @@
 # Horizon
-A modern multi-monitor management tool, replacing arandr, built with Dear ImGui.
+A modern multi-monitor management tool, replacing arandr, built with Qt and C++.
