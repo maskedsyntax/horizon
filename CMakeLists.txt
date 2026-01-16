@@ -22,3 +22,18 @@ add_executable(Horizon
 )
 
 target_link_libraries(Horizon PRIVATE Qt6::Widgets)
+
+install(TARGETS Horizon DESTINATION bin)
+
+set(CPACK_PACKAGE_VENDOR "Horizon")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Simple Xrandr GUI Manager")
+set(CPACK_PACKAGE_VERSION_MAJOR "0")
+set(CPACK_PACKAGE_VERSION_MINOR "1")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Horizon Maintainers <horizon@example.com>")
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "x11-xserver-utils")
+
+include(CPack)
