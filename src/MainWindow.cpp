@@ -8,6 +8,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include <QProcess>
+#include <QApplication>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,25 +24,47 @@ MainWindow::~MainWindow()
 void MainWindow::setupUi()
 {
     setWindowTitle("Horizon - Display Manager");
-    resize(800, 600);
+    resize(1000, 700);
+
+    // Apply VS Code Modern Dark Theme
+    QString qss = R"(
+        QMainWindow { background-color: #1e1e1e; }
+        QWidget { background-color: #1e1e1e; color: #cccccc; }
+        QGraphicsView { background-color: #1e1e1e; border: none; }
+        QToolBar { background-color: #333333; border-bottom: 1px solid #252526; spacing: 10px; padding: 5px; }
+        QToolButton { color: #cccccc; background-color: transparent; border: none; padding: 6px; border-radius: 4px; }
+        QToolButton:hover { background-color: #454545; }
+        QToolButton:pressed { background-color: #3a3d41; }
+        QMessageBox { background-color: #252526; color: #cccccc; }
+        QMessageBox QPushButton { background-color: #007acc; color: white; border: none; padding: 6px 15px; border-radius: 2px; }
+        QMessageBox QPushButton:hover { background-color: #0098ff; }
+    )";
+    qApp->setStyleSheet(qss);
 
     // Central Widget
     QWidget *centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
     QVBoxLayout *layout = new QVBoxLayout(centralWidget);
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    // Toolbar
+    QToolBar *toolbar = addToolBar("Main Toolbar");
+    toolbar->setMovable(false);
+    
+    QAction *reloadAction = toolbar->addAction("Reload");
+    QAction *applyAction = toolbar->addAction("Apply");
+    QAction *saveAction = toolbar->addAction("Save As...");
+    
+    QWidget *spacer = new QWidget();
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    toolbar->addWidget(spacer); // Push actions to left or add specific layout if needed
 
     // Graphics View for Monitors
     scene = new QGraphicsScene(this);
     view = new QGraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
-    view->setBackgroundBrush(QBrush(QColor(50, 50, 50)));
+    view->setBackgroundBrush(QBrush(QColor("#1e1e1e")));
     layout->addWidget(view);
-
-    // Toolbar
-    QToolBar *toolbar = addToolBar("Main Toolbar");
-    QAction *reloadAction = toolbar->addAction("Reload");
-    QAction *applyAction = toolbar->addAction("Apply");
-    QAction *saveAction = toolbar->addAction("Save As...");
 
     connect(reloadAction, &QAction::triggered, this, &MainWindow::reloadScreens);
     connect(applyAction, &QAction::triggered, this, &MainWindow::applyConfig);
@@ -57,7 +80,7 @@ void MainWindow::loadScreens()
     for (const auto &screen : screens) {
         if (!screen.active) continue; // Skip inactive for now
         
-        ScreenItem *item = new ScreenItem(screen.name, screen.width, screen.height);
+        ScreenItem *item = new ScreenItem(screen);
         // Position is scaled by 1/10
         item->setPos(screen.x / 10.0, screen.y / 10.0);
         scene->addItem(item);
@@ -66,17 +89,9 @@ void MainWindow::loadScreens()
 
 void MainWindow::reloadScreens()
 {
-    // Force re-parse
-    // XrandrManager logic needs to be stateless or have a reload method?
-    // Current implementation: getScreens() calls parse if empty.
-    // We should probably force a refresh.
-    // Hack: instantiate new manager or make parse public. 
-    // Let's just create a new manager or rely on current behavior + clear
-    // But XrandrManager stores state.
-    // We will assume XrandrManager re-queries on getScreens if we clear it? 
-    // Actually the current implementation only parses if empty.
-    // We should modify XrandrManager to force reload, but for now let's just create a new one:
-    m_manager = XrandrManager(); 
+    // Reload logic
+    // We instantiate a new manager to force re-parsing (simple stateless approach for now)
+    // Actually getScreens() in current manager re-parses.
     loadScreens();
 }
 
@@ -94,6 +109,8 @@ void MainWindow::applyConfig()
             info.height = screenItem->getHeight();
             info.x = static_cast<int>(screenItem->pos().x() * 10);
             info.y = static_cast<int>(screenItem->pos().y() * 10);
+            info.currentRate = screenItem->getRate();
+            info.isPrimary = screenItem->isPrimary();
             info.active = true;
             info.connected = true;
             currentConfig.push_back(info);
@@ -124,6 +141,8 @@ void MainWindow::saveConfig()
             info.height = screenItem->getHeight();
             info.x = static_cast<int>(screenItem->pos().x() * 10);
             info.y = static_cast<int>(screenItem->pos().y() * 10);
+            info.currentRate = screenItem->getRate();
+            info.isPrimary = screenItem->isPrimary();
             info.active = true;
             info.connected = true;
             currentConfig.push_back(info);

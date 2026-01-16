@@ -5,26 +5,34 @@
 #include <QGraphicsTextItem>
 #include <QBrush>
 #include <QPen>
+#include "XrandrManager.h" // Need ResolutionMode
 
 class ScreenItem : public QGraphicsRectItem
 {
 public:
-    ScreenItem(const QString &name, int w, int h, QGraphicsItem *parent = nullptr);
+    ScreenItem(const ScreenInfo &info, QGraphicsItem *parent = nullptr);
 
     // Getters for logical position
-    QString getName() const { return screenName; }
-    int getWidth() const { return m_width; }
-    int getHeight() const { return m_height; }
+    QString getName() const { return m_info.name; }
+    int getWidth() const { return m_info.width; }
+    int getHeight() const { return m_info.height; }
+    double getRate() const { return m_info.currentRate; }
+    bool isPrimary() const { return m_info.isPrimary; }
+    std::vector<ResolutionMode> getModes() const { return m_info.modes; }
+
+    void setPrimary(bool primary);
+    void setRate(double rate);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) override;
 
 private:
-    QString screenName;
-    int m_width;
-    int m_height;
+    void updateAppearance();
+
+    ScreenInfo m_info;
     QGraphicsTextItem *textItem;
 };
 

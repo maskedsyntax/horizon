@@ -4,14 +4,23 @@
 #include <QString>
 #include <vector>
 
+struct ResolutionMode {
+    int width;
+    int height;
+    std::vector<double> rates;
+};
+
 struct ScreenInfo {
     QString name;
     int width;
     int height;
     int x;
     int y;
+    double currentRate;
     bool connected;
     bool active;
+    bool isPrimary;
+    std::vector<ResolutionMode> modes;
 };
 
 class XrandrManager {
